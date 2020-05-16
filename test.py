@@ -65,7 +65,7 @@ for doc in corpus_tfidf:
     pprint(doc)
     break
 
-lda_model = gensim.models.LdaMulticore(bow_corpus, num_topics=10, id2word=dictionary, passes=2, workers=2)
+lda_model = gensim.models.LdaMulticore(bow_corpus, num_topics=10, id2word=dictionary, passes=2, workers=4)
 for idx, topic in lda_model.print_topics(-1):
     print('Topic: {} \nWords: {}'.format(idx, topic))
 
@@ -79,6 +79,21 @@ for index, score in sorted(lda_model[bow_corpus[4310]], key=lambda tup: -1*tup[1
 
 for index, score in sorted(lda_model_tfidf[bow_corpus[4310]], key=lambda tup: -1*tup[1]):
     print("\nScore: {}\t \nTopic: {}".format(score, lda_model_tfidf.print_topic(index, 10)))
+
+with open("corpus.txt", "w") as myfile:
+    with open("corpus2.txt", "w") as myfile2:
+
+        myfile.write("Doc\tScore\tTopic\n")
+        for i in range (len(documents)):
+            for index, score in lda_model[bow_corpus[i]]:
+                myfile.write(str(i)+'\t'+str(score)+'\t'+str(index)+'\n')
+                myfile2.write("\nScore: {}\t \nTopic: {}".format(score, lda_model.print_topic(index, 10)))
+
+myfile.close()
+myfile2.close()
+#    for x in foo('ATCG'):
+#        myfile.write(''.join(x))
+#        myfile.write('\n')
 
 unseen_document = 'How a Pentagon deal became an identity crisis for Google'
 bow_vector = dictionary.doc2bow(preprocess(unseen_document))

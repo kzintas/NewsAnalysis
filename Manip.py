@@ -38,6 +38,9 @@ print(df_merged.columns)
 print(df_merged.columns.values)
 print(df_merged)
 
+df_topic3=df_merged.loc[df_merged['Topic'] == 3]
+print(df_topic3)
+
 #df_merged = pd.merge(df, df_max, on=['document_id','item_id'])
 #print (df)
 #df_max=df_corp.groupby(['Doc'], sort=False)['Score'].max()
